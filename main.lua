@@ -24,7 +24,7 @@ function love.load()
     LineX = VirtualWidth / 2
     LineY = 0
 
-    -- Score -- 
+    -- Score
     ScoreOne = 0
     ScoreTwo = 0
 
@@ -53,10 +53,6 @@ function love.load()
 
     -- Shader
     Shader = love.graphics.newShader("crt.glsl")
-
-    -- Filter
-    love.graphics.setDefaultFilter("nearest", "nearest")
-
 end
 
 function love.update(dt)
