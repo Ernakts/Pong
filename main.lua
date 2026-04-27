@@ -1,27 +1,25 @@
-local Shader
 local Canvas
-local Timer = 0 
+local Shader
 
 function love.load()
-    -- Window --
+    -- Window
     VirtualWidth = 1280
     VirtualHeight = 720
+    love.graphics.setDefaultFilter("nearest", "nearest")
 
-    -- Player -- 
+    -- Player
     PaddleWidth = 15
     PaddleHeight = 80
     PaddleSpeed = 600
     PlayerOne = (VirtualHeight / 2) - (PaddleHeight / 2)
     PlayerTwo = (VirtualHeight / 2) - (PaddleHeight / 2)
     
-    -- Ball --
+    -- Ball & Line
     BallX = VirtualWidth / 2
     BallY = VirtualHeight / 2
     BallSize = 15
     BallSpeedX = 300
     BallSpeedY = 300
-
-    -- Line --
     LineWidth = 15
     LineHeight = VirtualHeight
     LineX = VirtualWidth / 2
@@ -31,27 +29,30 @@ function love.load()
     ScoreOne = 0
     ScoreTwo = 0
 
-    -- Scene --
+    -- Scene
     MainMenu = true
     love.mouse.setVisible(false)
 
-    -- UI --
-    TitleUI = love.graphics.newFont("assets/fonts/press_start_2p.ttf", 75)
-    ScoreUI = love.graphics.newFont("assets/fonts/press_start_2p.ttf", 50)
-    TextUI = love.graphics.newFont("assets/fonts/press_start_2p.ttf", 20)
+    -- UI 
+    TitleUI = love.graphics.newFont("fonts/press_start_2p.ttf", 75)
+    ScoreUI = love.graphics.newFont("fonts/press_start_2p.ttf", 50)
+    TextUI = love.graphics.newFont("fonts/press_start_2p.ttf", 20)
+    Icon = love.image.newImageData("icon.png")
+    love.window.setIcon(Icon)
 
-    -- Time -- 
+    -- Time 
     PauseTimer = 0
+    Timer = 0
 
-    -- Audio --
-    StartSound = love.audio.newSource("assets/sounds/start.ogg", "static")
-    ShootSound = love.audio.newSource("assets/sounds/shoot.ogg", "static")
-    EndSound = love.audio.newSource("assets/sounds/end.ogg", "static")
+    -- Audio
+    StartSound = love.audio.newSource("sounds/start.ogg", "static")
+    ShootSound = love.audio.newSource("sounds/shoot.ogg", "static")
+    EndSound = love.audio.newSource("sounds/end.ogg", "static")
 
-    -- Canvas --
+    -- Canvas
     Canvas = love.graphics.newCanvas(VirtualWidth, VirtualHeight)
 
-    -- Shader --
+    -- Shader
     Shader = love.graphics.newShader("crt.glsl")
 end
 
@@ -69,21 +70,17 @@ function love.update(dt)
 end
 
 function love.draw()
-    -- Canvas|ON --
     love.graphics.setCanvas(Canvas)
     love.graphics.clear()
 
-    -- Player --
     love.graphics.rectangle("fill", 20, PlayerOne, PaddleWidth, PaddleHeight)
     love.graphics.rectangle("fill", VirtualWidth - 20 - PaddleWidth, PlayerTwo, PaddleWidth, PaddleHeight)
 
-    -- Line & Ball --
     if not MainMenu then
         love.graphics.rectangle("fill", LineX, LineY, LineWidth, LineHeight)
         love.graphics.rectangle("fill", BallX, BallY, BallSize, BallSize)
     end
 
-    -- UI --
     if MainMenu then
         love.graphics.setFont(TitleUI)
         love.graphics.print("PONG", VirtualWidth / 2 - 150, VirtualHeight / 2 - 250)
@@ -93,38 +90,32 @@ function love.draw()
         love.graphics.print("S", 100, VirtualHeight / 2 + 23)
         love.graphics.print("Up", VirtualWidth - 160, VirtualHeight / 2 - 40)
         love.graphics.print("Down", VirtualWidth - 180, VirtualHeight / 2 + 23)
-        love.graphics.print('"F" Fullscreen/Window', 20, VirtualHeight / 2 + 320)
-        love.graphics.print("V1.0", VirtualWidth - 100, VirtualHeight / 2 + 320)
+        love.graphics.print('"F" Fullscreen | Window', 20, VirtualHeight / 2 + 320)
+        love.graphics.print("V1.1", VirtualWidth - 100, VirtualHeight / 2 + 320)
     elseif not MainMenu then
         love.graphics.setFont(ScoreUI)
         love.graphics.print(ScoreOne, 475, 50)
         love.graphics.print(ScoreTwo, VirtualWidth - 500, 50)
     end
 
-    -- Canvas|OFF --
     love.graphics.setCanvas()
 
-    -- Scale --
     local VWindow = love.graphics.getWidth()
     local HWindow = love.graphics.getHeight()
     local Scale = math.min(VWindow / VirtualWidth, HWindow / VirtualHeight)
     local OffsetX = (VWindow - VirtualWidth * Scale) / 2
     local OffsetY = (HWindow - VirtualHeight * Scale) / 2
 
-    -- Shader|ON --
     love.graphics.setShader(Shader)
     Shader:send("screen_res", {VWindow, HWindow})
     love.graphics.draw(Canvas, OffsetX, OffsetY, 0, Scale, Scale)
-
-    -- Shader|OFF --
     love.graphics.setShader()
-
 end
 
 function love.keypressed(key)
     if key == "f" and MainMenu then
-        love.audio.play(ShootSound)
         local IsFullscreen = love.window.getFullscreen()
+        love.audio.play(ShootSound)
         love.window.setFullscreen(not IsFullscreen)
     elseif key == "space" and MainMenu then
         love.audio.play(StartSound) 
