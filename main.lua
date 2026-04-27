@@ -5,7 +5,6 @@ function love.load()
     -- Window
     VirtualWidth = 1280
     VirtualHeight = 720
-    love.graphics.setDefaultFilter("nearest", "nearest")
 
     -- Player
     PaddleWidth = 15
@@ -54,6 +53,10 @@ function love.load()
 
     -- Shader
     Shader = love.graphics.newShader("crt.glsl")
+
+    -- Filter
+    love.graphics.setDefaultFilter("nearest", "nearest")
+
 end
 
 function love.update(dt)
@@ -102,13 +105,12 @@ function love.draw()
 
     local VWindow = love.graphics.getWidth()
     local HWindow = love.graphics.getHeight()
-    local Scale = math.min(VWindow / VirtualWidth, HWindow / VirtualHeight)
-    local OffsetX = (VWindow - VirtualWidth * Scale) / 2
-    local OffsetY = (HWindow - VirtualHeight * Scale) / 2
+    local ScaleX = VWindow / VirtualWidth
+    local ScaleY = HWindow / VirtualHeight
 
     love.graphics.setShader(Shader)
     Shader:send("screen_res", {VWindow, HWindow})
-    love.graphics.draw(Canvas, OffsetX, OffsetY, 0, Scale, Scale)
+    love.graphics.draw(Canvas, 0, 0, 0, ScaleX, ScaleY)
     love.graphics.setShader()
 end
 
