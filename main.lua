@@ -3,8 +3,8 @@ local Shader
 
 function love.load()
     -- Window
-    VirtualWidth = 1280
-    VirtualHeight = 720
+    VirtualWidth = 800
+    VirtualHeight = 600
 
     -- Player
     PaddleWidth = 15
@@ -84,13 +84,14 @@ function love.draw()
         love.graphics.setFont(TitleUI)
         love.graphics.print("PONG", VirtualWidth / 2 - 150, VirtualHeight / 2 - 250)
         love.graphics.setFont(TextUI)
-        love.graphics.print('Press "Space" Key', VirtualWidth / 2 - 170, VirtualHeight / 2 - 15)
         love.graphics.print("W", 100, VirtualHeight / 2 - 40)
         love.graphics.print("S", 100, VirtualHeight / 2 + 23)
         love.graphics.print("Up", VirtualWidth - 160, VirtualHeight / 2 - 40)
         love.graphics.print("Down", VirtualWidth - 180, VirtualHeight / 2 + 23)
-        love.graphics.print('"F" Fullscreen | Window', 20, VirtualHeight / 2 + 320)
-        love.graphics.print("V1.1", VirtualWidth - 100, VirtualHeight / 2 + 320)
+        love.graphics.print('"Space" Start' , 20, VirtualHeight / 2 + 185)
+        love.graphics.print('"F" Window', 20, VirtualHeight / 2 + 225)
+        love.graphics.print('"Q" Quit', 20, VirtualHeight / 2 + 265)
+        love.graphics.print("V1.2", VirtualWidth - 95, VirtualHeight / 2 + 265)
     elseif not MainMenu then
         love.graphics.setFont(ScoreUI)
         love.graphics.print(ScoreOne, 475, 50)
@@ -113,8 +114,9 @@ end
 function love.keypressed(key)
     if key == "f" and MainMenu then
         local IsFullscreen = love.window.getFullscreen()
-        love.audio.play(ShootSound)
         love.window.setFullscreen(not IsFullscreen)
+    elseif key == "q" and MainMenu then
+        love.event.quit()
     elseif key == "space" and MainMenu then
         love.audio.play(StartSound) 
         MainMenu = false
