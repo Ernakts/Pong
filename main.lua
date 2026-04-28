@@ -88,8 +88,7 @@ function love.draw()
         love.graphics.print("S", 100, VirtualHeight / 2 + 23)
         love.graphics.print("Up", VirtualWidth - 160, VirtualHeight / 2 - 40)
         love.graphics.print("Down", VirtualWidth - 180, VirtualHeight / 2 + 23)
-        love.graphics.print('"Space" Start' , 20, VirtualHeight / 2 + 185)
-        love.graphics.print('"F" Window', 20, VirtualHeight / 2 + 225)
+        love.graphics.print('"Space" Start' , 20, VirtualHeight / 2 + 225)
         love.graphics.print('"Q" Quit', 20, VirtualHeight / 2 + 265)
         love.graphics.print("V1.2", VirtualWidth - 95, VirtualHeight / 2 + 265)
     elseif not MainMenu then
@@ -112,10 +111,7 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    if key == "f" and MainMenu then
-        local IsFullscreen = love.window.getFullscreen()
-        love.window.setFullscreen(not IsFullscreen)
-    elseif key == "q" and MainMenu then
+    if key == "q" and MainMenu then
         love.event.quit()
     elseif key == "space" and MainMenu then
         love.audio.play(StartSound) 
