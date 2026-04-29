@@ -3,8 +3,8 @@ local Shader
 
 function love.load()
     -- Window
-    VirtualWidth = 800
-    VirtualHeight = 600
+    VirtualWidth = 1280
+    VirtualHeight = 720
 
     -- Player
     PaddleWidth = 15
@@ -88,9 +88,9 @@ function love.draw()
         love.graphics.print("S", 100, VirtualHeight / 2 + 23)
         love.graphics.print("Up", VirtualWidth - 160, VirtualHeight / 2 - 40)
         love.graphics.print("Down", VirtualWidth - 180, VirtualHeight / 2 + 23)
-        love.graphics.print('"Space" Start' , 20, VirtualHeight / 2 + 225)
-        love.graphics.print('"Q" Quit', 20, VirtualHeight / 2 + 265)
-        love.graphics.print("V1.2", VirtualWidth - 95, VirtualHeight / 2 + 265)
+        love.graphics.print('"Space" Start' , 20, VirtualHeight / 2 + 290)
+        love.graphics.print('"Q" Quit', 20, VirtualHeight / 2 + 330)
+        love.graphics.print("V1.2", VirtualWidth - 95, VirtualHeight / 2 + 330)
     elseif not MainMenu then
         love.graphics.setFont(ScoreUI)
         love.graphics.print(ScoreOne, 475, 50)
