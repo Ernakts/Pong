@@ -36,8 +36,6 @@ function love.load()
     TitleUI = love.graphics.newFont("fonts/press_start_2p.ttf", 75)
     ScoreUI = love.graphics.newFont("fonts/press_start_2p.ttf", 50)
     TextUI = love.graphics.newFont("fonts/press_start_2p.ttf", 20)
-    Icon = love.image.newImageData("icon.png")
-    love.window.setIcon(Icon)
 
     -- Time 
     PauseTimer = 0
